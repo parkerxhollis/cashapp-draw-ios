@@ -1,0 +1,10 @@
+# CashDraw iOS dependencies
+#
+# Install:  pip install -r requirements.txt
+#
+# Note: PyObjC (Quartz) is bundled with macOS Python — no install needed.
+#       If your venv doesn't have it, run: pip install pyobjc-framework-Quartz
+
+pyautogui>=0.9.54        # calibrate.py: mouse position detection
+numpy>=1.24.0            # draw.py: image processing
+Pillow>=10.0.0           # draw.py: template/image I/O
