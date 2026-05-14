@@ -1,0 +1,16 @@
+# Generated files
+config.json
+template.png
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
