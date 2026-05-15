@@ -214,6 +214,7 @@ def draw_strokes(strokes: list, boundary: dict, cols: int, rows: int,
     print(f"Drawing {total} strokes...")
     sw, _ = cg_screen_size()
     safe_x, safe_y = sw // 2, 50
+    start_time = time.time()
 
     bw = boundary["right_x"] - boundary["left_x"]
     drag_len = max(6, int(bw / cols * 3))
@@ -230,10 +231,16 @@ def draw_strokes(strokes: list, boundary: dict, cols: int, rows: int,
         if (i + 1) % 50 == 0:
             cg_move(safe_x, safe_y)
             time.sleep(0.2)
-            print(f"  {i + 1}/{total}")
+            elapsed = time.time() - start_time
+            rate = (i + 1) / elapsed
+            remaining = total - (i + 1)
+            eta = remaining / rate
+            pct = (i + 1) / total * 100
+            print(f"  {i + 1}/{total} ({pct:.0f}%) | {elapsed:.0f}s elapsed | ~{eta:.0f}s left")
 
     cg_move(safe_x, safe_y)
-    print(f"  Done: {total} strokes")
+    total_time = time.time() - start_time
+    print(f"  Done: {total} strokes in {total_time:.0f}s")
 
 
 def draw_tiny_drags(drags: list[tuple[int, int]], boundary: dict, cols: int, rows: int,
@@ -248,6 +255,7 @@ def draw_tiny_drags(drags: list[tuple[int, int]], boundary: dict, cols: int, row
     print(f"Drawing {total} drags (~{est:.0f}s)...")
     sw, _ = cg_screen_size()
     safe_x, safe_y = sw // 2, 50
+    start_time = time.time()
 
     bw = boundary["right_x"] - boundary["left_x"]
     drag_len = max(6, int(bw / cols * 3))
@@ -258,13 +266,19 @@ def draw_tiny_drags(drags: list[tuple[int, int]], boundary: dict, cols: int, row
         cg_drag(x, y, x + drag_len, y, steps=steps, duration=max(0.06, drag_len * 0.01))
         time.sleep(delay)
 
-        if (i + 1) % 20 == 0:
+        if (i + 1) % 100 == 0:
             cg_move(safe_x, safe_y)
             time.sleep(0.3)
-            print(f"  {i + 1}/{total}")
+            elapsed = time.time() - start_time
+            rate = (i + 1) / elapsed
+            remaining = total - (i + 1)
+            eta = remaining / rate
+            pct = (i + 1) / total * 100
+            print(f"  {i + 1}/{total} ({pct:.0f}%) | {elapsed:.0f}s elapsed | ~{eta:.0f}s left")
 
     cg_move(safe_x, safe_y)
-    print(f"  Done: {total} drags")
+    total_time = time.time() - start_time
+    print(f"  Done: {total} drags in {total_time:.0f}s")
 
 
 # ── Template generator ──
